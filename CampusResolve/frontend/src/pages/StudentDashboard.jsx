@@ -5,6 +5,7 @@ import { AuthContext } from '../context/AuthContext';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { FiFileText, FiClock, FiSettings, FiCheckCircle, FiXCircle, FiBell, FiPlus, FiMessageSquare } from 'react-icons/fi';
 import ContactAdminModal from '../components/ContactAdminModal';
+import API_URL from '../config/api';
 
 const statusColors = {
   'Submitted':    'bg-blue-100 text-blue-800 border border-blue-200',
@@ -64,9 +65,9 @@ const StudentDashboard = () => {
     const fetchAll = async () => {
       try {
         const [statsRes, myRes, notifRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/complaints/stats', { headers }),
-          axios.get('http://localhost:5000/api/complaints/my', { headers }),
-          axios.get('http://localhost:5000/api/notifications', { headers }),
+          axios.get(`${API_URL}/api/complaints/stats`, { headers }),
+          axios.get(`${API_URL}/api/complaints/my`, { headers }),
+          axios.get(`${API_URL}/api/notifications`, { headers }),
         ]);
         setStats(statsRes.data || { total: 0, pending: 0, resolved: 0, rejected: 0 });
         setMyComplaints(Array.isArray(myRes.data) ? myRes.data : []);

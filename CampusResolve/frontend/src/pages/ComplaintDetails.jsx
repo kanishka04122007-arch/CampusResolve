@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
+import API_URL from '../config/api';
 
 const TIMELINE = ['Submitted','Under Review','Assigned','In Progress','Resolved','Closed'];
 
@@ -26,7 +27,7 @@ const ComplaintDetails = () => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/complaints/${id}`, {
+        const res = await axios.get(`${API_URL}/api/complaints/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setComplaint(res.data);
@@ -109,7 +110,7 @@ const ComplaintDetails = () => {
             {complaint.attachment && (
               <div className="mt-4">
                 <p className="text-xs text-slate-400 mb-2 font-semibold uppercase">Attachment</p>
-                <a href={`http://localhost:5000/${complaint.attachment}`} target="_blank" rel="noopener noreferrer"
+                <a href={`${API_URL}/${complaint.attachment}`} target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 text-sm font-medium rounded-xl transition">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
                   View Attachment

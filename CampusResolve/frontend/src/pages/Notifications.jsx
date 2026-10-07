@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_URL from '../config/api';
 
 export default function Notifications() {
   const [notifications, setNotifications] = useState([]);
@@ -12,7 +13,7 @@ export default function Notifications() {
 
   const fetchNotifications = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/notifications', {
+      const res = await axios.get(`${API_URL}/api/notifications`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setNotifications(res.data);
@@ -26,7 +27,7 @@ export default function Notifications() {
 
   const markAsRead = async (id) => {
     try {
-      await axios.put(`http://localhost:5000/api/notifications/${id}/read`, {}, {
+      await axios.put(`${API_URL}/api/notifications/${id}/read`, {}, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setNotifications(notifications.map(n => n._id === id ? { ...n, read: true } : n));
@@ -37,7 +38,7 @@ export default function Notifications() {
 
   const markAllAsRead = async () => {
     try {
-      await axios.put('http://localhost:5000/api/notifications/mark-all-read', {}, {
+      await axios.put(`${API_URL}/api/notifications/mark-all-read`, {}, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setNotifications(notifications.map(n => ({ ...n, read: true })));
@@ -48,7 +49,7 @@ export default function Notifications() {
 
   const deleteNotification = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/notifications/${id}`, {
+      await axios.delete(`${API_URL}/api/notifications/${id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setNotifications(notifications.filter(n => n._id !== id));

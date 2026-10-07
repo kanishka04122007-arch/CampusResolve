@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import API_URL from '../config/api';
 
 const STATUS_OPTIONS = ['All','Submitted','Under Review','Assigned','In Progress','Resolved','Closed','Rejected'];
 
@@ -34,7 +35,7 @@ const MyComplaints = () => {
 
   const fetchComplaints = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/complaints/my', {
+      const res = await axios.get(`${API_URL}/api/complaints/my`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setComplaints(res.data);
@@ -44,7 +45,7 @@ const MyComplaints = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/complaints/${id}`, {
+      await axios.delete(`${API_URL}/api/complaints/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setComplaints(prev => prev.filter(c => c._id !== id));

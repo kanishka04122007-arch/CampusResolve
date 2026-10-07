@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import API_URL from '../config/api';
 
 const statusColors = {
   'Assigned':    'bg-indigo-100 text-indigo-800',
@@ -38,8 +39,8 @@ const StaffDashboard = () => {
     const fetchAll = async () => {
       try {
         const [statsRes, complaintsRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/staff/stats', { headers }),
-          axios.get('http://localhost:5000/api/staff/complaints', { headers }),
+          axios.get(`${API_URL}/api/staff/stats`, { headers }),
+          axios.get(`${API_URL}/api/staff/complaints`, { headers }),
         ]);
         setStats(statsRes.data);
         // Show 5 most recent

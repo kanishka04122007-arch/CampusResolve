@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import API_URL from '../../config/api';
 
 const AdminComplaints = () => {
   const [complaints, setComplaints] = useState([]);
@@ -16,7 +17,7 @@ const AdminComplaints = () => {
   const fetchComplaints = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/admin/complaints', {
+      const res = await axios.get(`${API_URL}/api/admin/complaints`, {
         headers: { Authorization: `Bearer ${token}` },
         params: { search: searchTerm, status: statusFilter, department: departmentFilter }
       });

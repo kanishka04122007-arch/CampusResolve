@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import API_URL from '../config/api';
 
 const DEPARTMENTS = ['Hostel','Library','Transport','Academic','Examination','Placement','Infrastructure','IT Support'];
 const PRIORITIES = ['Low','Medium','High','Critical'];
@@ -19,7 +20,7 @@ const EditComplaint = () => {
   useEffect(() => {
     const fetchComplaint = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/complaints/${id}`, {
+        const res = await axios.get(`${API_URL}/api/complaints/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         const c = res.data;
@@ -58,7 +59,7 @@ const EditComplaint = () => {
     if (attachment) data.append('attachment', attachment);
 
     try {
-      await axios.put(`http://localhost:5000/api/complaints/${id}`, data, {
+      await axios.put(`${API_URL}/api/complaints/${id}`, data, {
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
       });
       navigate('/complaints/my');

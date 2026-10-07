@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { FiX, FiCheckCircle } from 'react-icons/fi';
+import API_URL from '../config/api';
 
 const ContactAdminModal = ({ isOpen, onClose }) => {
   const [issueType, setIssueType] = useState('Account Problem');
@@ -22,7 +23,7 @@ const ContactAdminModal = ({ isOpen, onClose }) => {
     setError('');
 
     try {
-      await axios.post('http://localhost:5000/api/support', 
+      await axios.post(`${API_URL}/api/support`, 
         { issueType, message },
         { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
       );

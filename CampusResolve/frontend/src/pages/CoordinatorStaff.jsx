@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import API_URL from '../config/api';
 
 const CoordinatorStaff = () => {
   const [staffList, setStaffList]     = useState([]);
@@ -13,8 +14,8 @@ const CoordinatorStaff = () => {
     const fetchAll = async () => {
       try {
         const [staffRes, complaintsRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/coordinator/staff', { headers }),
-          axios.get('http://localhost:5000/api/coordinator/complaints', { headers }),
+          axios.get(`${API_URL}/api/coordinator/staff`, { headers }),
+          axios.get(`${API_URL}/api/coordinator/complaints`, { headers }),
         ]);
         setStaffList(staffRes.data);
         setAllComplaints(complaintsRes.data);

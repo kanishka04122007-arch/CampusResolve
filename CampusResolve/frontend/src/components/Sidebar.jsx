@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
+import API_URL from '../config/api';
 
 // ── Role color themes ───────────────────────────────────────────────────────
 const roleTheme = {
@@ -19,7 +20,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     if (user) {
-      axios.get('http://localhost:5000/api/notifications', {
+      axios.get(`${API_URL}/api/notifications`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
       .then(res => {
@@ -150,7 +151,7 @@ const Sidebar = () => {
         <div className="flex flex-col items-center text-center">
           <div className="relative mb-3 group">
             {user?.profilePicture ? (
-              <img src={`http://localhost:5000/${user.profilePicture}`} alt="Profile" className="w-20 h-20 rounded-full object-cover shadow-lg border-[3px] border-[#1E293B] transition-transform group-hover:scale-105" />
+              <img src={`${API_URL}/${user.profilePicture}`} alt="Profile" className="w-20 h-20 rounded-full object-cover shadow-lg border-[3px] border-[#1E293B] transition-transform group-hover:scale-105" />
             ) : (
               <div className={`w-20 h-20 ${theme.logo} rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-lg border-[3px] border-[#1E293B] transition-transform group-hover:scale-105`}>
                 {user?.name?.substring(0,2).toUpperCase()}

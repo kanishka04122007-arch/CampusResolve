@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FiCheckCircle, FiClock, FiInfo, FiUploadCloud, FiFileText } from 'react-icons/fi';
+import API_URL from '../config/api';
 
 const DEPARTMENTS = ['Hostel','Library','Transport','Academic','Examination','Placement','Infrastructure','IT Support', 'Water Facility', 'Electrical Maintenance', 'Cleaning Service'];
 const PRIORITIES = ['Low','Medium','High','Critical'];
@@ -45,7 +46,7 @@ const CreateComplaint = () => {
     if (attachment) data.append('attachment', attachment);
 
     try {
-      await axios.post('http://localhost:5000/api/complaints', data, {
+      await axios.post(`${API_URL}/api/complaints`, data, {
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
       });
       setSuccess('✅ Complaint submitted successfully! Redirecting...');

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import API_URL from '../../config/api';
 
 const AdminOverview = () => {
   const [stats, setStats] = useState(null);
@@ -12,7 +13,7 @@ const AdminOverview = () => {
   const fetchStats = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/admin/stats', {
+      const res = await axios.get(`${API_URL}/api/admin/stats`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setStats(res.data);

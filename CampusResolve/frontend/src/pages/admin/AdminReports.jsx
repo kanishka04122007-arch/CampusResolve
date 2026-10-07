@@ -13,6 +13,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import API_URL from '../../config/api';
 
 ChartJS.register(
   CategoryScale,
@@ -37,7 +38,7 @@ const AdminReports = () => {
   const fetchReports = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/admin/reports', {
+      const res = await axios.get(`${API_URL}/api/admin/reports`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setReportData(res.data);

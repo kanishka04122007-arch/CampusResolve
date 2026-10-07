@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import API_URL from '../config/api';
 
 const STATUS_FILTER = ['All', 'Assigned', 'In Progress', 'Resolved', 'Closed'];
 
@@ -29,7 +30,7 @@ const StaffComplaints = () => {
   const headers = { Authorization: `Bearer ${token}` };
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/staff/complaints', { headers })
+    axios.get(`${API_URL}/api/staff/complaints`, { headers })
       .then(r => setComplaints(r.data))
       .catch(console.error)
       .finally(() => setLoading(false));

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import API_URL from '../config/api';
 
 const STATUS_OPTIONS = ['All','Submitted','Under Review','Assigned','In Progress','Resolved','Closed','Rejected'];
 
@@ -36,7 +37,7 @@ const CoordinatorComplaints = () => {
 
   const fetchComplaints = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/coordinator/complaints', { headers });
+      const res = await axios.get(`${API_URL}/api/coordinator/complaints`, { headers });
       setComplaints(res.data);
     } catch (e) { console.error(e); }
     finally { setLoading(false); }
@@ -45,7 +46,7 @@ const CoordinatorComplaints = () => {
   const quickApprove = async (id) => {
     setActionLoading(id + '_approve');
     try {
-      await axios.put(`http://localhost:5000/api/coordinator/approve/${id}`, {}, { headers });
+      await axios.put(`${API_URL}/api/coordinator/approve/${id}`, {}, { headers });
       setComplaints(prev => prev.map(c => c._id === id ? { ...c, status: 'Under Review' } : c));
     } catch (e) { alert(e.response?.data?.message || 'Action failed'); }
     finally { setActionLoading(''); }
@@ -54,7 +55,7 @@ const CoordinatorComplaints = () => {
   const quickReject = async (id) => {
     setActionLoading(id + '_reject');
     try {
-      await axios.put(`http://localhost:5000/api/coordinator/reject/${id}`, {}, { headers });
+      await axios.put(`${API_URL}/api/coordinator/reject/${id}`, {}, { headers });
       setComplaints(prev => prev.map(c => c._id === id ? { ...c, status: 'Rejected' } : c));
     } catch (e) { alert(e.response?.data?.message || 'Action failed'); }
     finally { setActionLoading(''); }

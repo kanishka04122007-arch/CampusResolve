@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import API_URL from '../config/api';
 
 const statusColors = {
   'Submitted':    'bg-yellow-100 text-yellow-800',
@@ -40,8 +41,8 @@ const CoordinatorDashboard = () => {
     const fetchAll = async () => {
       try {
         const [statsRes, complaintsRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/coordinator/stats', { headers }),
-          axios.get('http://localhost:5000/api/coordinator/complaints', { headers }),
+          axios.get(`${API_URL}/api/coordinator/stats`, { headers }),
+          axios.get(`${API_URL}/api/coordinator/complaints`, { headers }),
         ]);
         setStats(statsRes.data);
         setComplaints(complaintsRes.data.slice(0, 5));

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FiMessageSquare, FiSearch, FiRefreshCw, FiX, FiCheck } from 'react-icons/fi';
+import API_URL from '../config/api';
 
 const AdminSupportTickets = () => {
   const [tickets, setTickets] = useState([]);
@@ -14,7 +15,7 @@ const AdminSupportTickets = () => {
   const fetchTickets = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('http://localhost:5000/api/support', {
+      const res = await axios.get(`${API_URL}/api/support`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setTickets(res.data);
@@ -35,7 +36,7 @@ const AdminSupportTickets = () => {
     
     setReplyLoading(true);
     try {
-      const res = await axios.put(`http://localhost:5000/api/support/${selectedTicket._id}/reply`, 
+      const res = await axios.put(`${API_URL}/api/support/${selectedTicket._id}/reply`, 
         { adminReply: replyText, status: 'Resolved' },
         { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
       );
@@ -51,7 +52,7 @@ const AdminSupportTickets = () => {
 
   const updateStatus = async (id, status) => {
     try {
-      const res = await axios.put(`http://localhost:5000/api/support/${id}/status`, 
+      const res = await axios.put(`${API_URL}/api/support/${id}/status`, 
         { status },
         { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
       );

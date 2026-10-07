@@ -4,7 +4,7 @@ const Complaint = require('./models/Complaint');
 const Notification = require('./models/Notification');
 require('dotenv').config();
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://campusresolve-gp64.onrender.com/api';
 
 async function request(url, options = {}) {
   const headers = options.headers || {};
@@ -189,7 +189,7 @@ async function runTests() {
     // Profile page & update
     const prof = await request(`${API_URL}/profile`, { headers: studentHeaders });
     results.student.profileDetails = prof.data.email === studentEmail;
-    
+
     const pUpdate = await request(`${API_URL}/profile`, {
       method: 'PUT',
       headers: studentHeaders,
@@ -312,7 +312,7 @@ async function runTests() {
   try {
     const studentHeaders = { Authorization: `Bearer ${studentToken}` };
     const notifs = await request(`${API_URL}/notifications`, { headers: studentHeaders });
-    
+
     // Check if notifications exist for this complaint
     const relNotifs = notifs.data.filter(n => n.relatedId?.toString() === testComplaintMongoId);
     results.student.notificationsReceived = relNotifs.length >= 3; // assigned, resolved, closed

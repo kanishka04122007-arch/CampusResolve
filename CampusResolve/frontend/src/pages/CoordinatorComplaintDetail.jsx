@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import API_URL from '../config/api';
 
 const TIMELINE = ['Submitted','Under Review','Assigned','In Progress','Resolved','Closed'];
 
@@ -45,8 +46,8 @@ const CoordinatorComplaintDetail = () => {
     const fetchAll = async () => {
       try {
         const [cRes, sRes] = await Promise.all([
-          axios.get(`http://localhost:5000/api/complaints/${id}`, { headers }),
-          axios.get('http://localhost:5000/api/coordinator/staff', { headers }),
+          axios.get(`${API_URL}/api/complaints/${id}`, { headers }),
+          axios.get(`${API_URL}/api/coordinator/staff`, { headers }),
         ]);
         setComplaint(cRes.data);
         setStaffList(sRes.data);
@@ -62,7 +63,7 @@ const CoordinatorComplaintDetail = () => {
   const handleApprove = async () => {
     setActionLoading('approve');
     try {
-      const res = await axios.put(`http://localhost:5000/api/coordinator/approve/${id}`, {}, { headers });
+      const res = await axios.put(`${API_URL}/api/coordinator/approve/${id}`, {}, { headers });
       setComplaint(res.data.complaint);
       showToast('✅ Complaint approved — status set to Under Review');
     } catch (e) { alert(e.response?.data?.message || 'Failed'); }
@@ -72,7 +73,7 @@ const CoordinatorComplaintDetail = () => {
   const handleReject = async () => {
     setActionLoading('reject');
     try {
-      const res = await axios.put(`http://localhost:5000/api/coordinator/reject/${id}`, { remark: rejectRemark }, { headers });
+      const res = await axios.put(`${API_URL}/api/coordinator/reject/${id}`, { remark: rejectRemark }, { headers });
       setComplaint(res.data.complaint);
       setShowRejectModal(false);
       setRejectRemark('');
@@ -85,7 +86,7 @@ const CoordinatorComplaintDetail = () => {
     if (!selectedStaff) { alert('Please select a staff member.'); return; }
     setActionLoading('assign');
     try {
-      const res = await axios.put(`http://localhost:5000/api/coordinator/assign/${id}`, { staffId: selectedStaff, remark: assignRemark }, { headers });
+      const res = await axios.put(`${API_URL}/api/coordinator/assign/${id}`, { staffId: selectedStaff, remark: assignRemark }, { headers });
       setComplaint(res.data.complaint);
       setShowAssignPanel(false);
       setSelectedStaff('');
@@ -99,7 +100,7 @@ const CoordinatorComplaintDetail = () => {
     if (!remarkText.trim()) return;
     setActionLoading('remark');
     try {
-      const res = await axios.post(`http://localhost:5000/api/coordinator/remark/${id}`, { remark: remarkText }, { headers });
+      const res = await axios.post(`${API_URL}/api/coordinator/remark/${id}`, { remark: remarkText }, { headers });
       setComplaint(res.data.complaint);
       setRemarkText('');
       showToast('💬 Remark added successfully');
@@ -110,7 +111,7 @@ const CoordinatorComplaintDetail = () => {
   const handleVerify = async (action) => {
     setActionLoading(`verify-${action}`);
     try {
-      const res = await axios.put(`http://localhost:5000/api/coordinator/verify/${id}`, { action, remark: verifyRemark }, { headers });
+      const res = await axios.put(`${API_URL}/api/coordinator/verify/${id}`, { action, remark: verifyRemark }, { headers });
       setComplaint(res.data.complaint);
       setVerifyRemark('');
       setShowVerifyPanel(false);
@@ -213,7 +214,7 @@ const CoordinatorComplaintDetail = () => {
             {complaint.attachment && (
               <div className="mt-5">
                 <p className="text-xs text-slate-400 mb-2 font-semibold uppercase">Attachment</p>
-                <a href={`http://localhost:5000/${complaint.attachment}`} target="_blank" rel="noopener noreferrer"
+                <a href={`${API_URL}/${complaint.attachment}`} target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 text-sm font-medium rounded-xl transition">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
                   View Attachment

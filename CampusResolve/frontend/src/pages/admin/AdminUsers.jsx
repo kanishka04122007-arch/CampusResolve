@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import API_URL from '../../config/api';
 
 const AdminUsers = () => {
   const [users, setUsers] = useState([]);
@@ -14,7 +15,7 @@ const AdminUsers = () => {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/admin/users', {
+      const res = await axios.get(`${API_URL}/api/admin/users`, {
         headers: { Authorization: `Bearer ${token}` },
         params: { search: searchTerm, role: roleFilter }
       });
@@ -30,7 +31,7 @@ const AdminUsers = () => {
     if (!window.confirm(`Are you sure you want to ${currentStatus ? 'deactivate' : 'activate'} this user?`)) return;
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5000/api/admin/users/${id}`, { isActive: !currentStatus }, {
+      await axios.put(`${API_URL}/api/admin/users/${id}`, { isActive: !currentStatus }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchUsers();
@@ -43,7 +44,7 @@ const AdminUsers = () => {
     if (!window.confirm('Are you sure you want to delete this user? This action cannot be undone.')) return;
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/admin/users/${id}`, {
+      await axios.delete(`${API_URL}/api/admin/users/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchUsers();

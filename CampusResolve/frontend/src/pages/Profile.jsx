@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
+import API_URL from '../config/api';
 import { 
   FiCamera, FiEdit3, FiLock, FiMail, FiUser, FiPhone, FiCheck, FiX, 
   FiActivity, FiCheckCircle, FiClock, FiTrash2, FiUsers, FiBriefcase, FiAlertTriangle 
@@ -32,7 +33,7 @@ const Profile = () => {
   const fetchProfile = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/profile', {
+      const res = await axios.get(`${API_URL}/api/profile`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setProfile(res.data);
@@ -57,7 +58,7 @@ const Profile = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.put('http://localhost:5000/api/profile', editForm, {
+      const res = await axios.put(`${API_URL}/api/profile`, editForm, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setProfile({ ...profile, ...res.data.user });
@@ -81,7 +82,7 @@ const Profile = () => {
     }
     try {
       const token = localStorage.getItem('token');
-      await axios.put('http://localhost:5000/api/profile/change-password', {
+      await axios.put(`${API_URL}/api/profile/change-password`, {
         currentPassword: pwdForm.currentPassword,
         newPassword: pwdForm.newPassword
       }, { headers: { Authorization: `Bearer ${token}` } });
@@ -103,7 +104,7 @@ const Profile = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.post('http://localhost:5000/api/profile/upload-image', formData, {
+      const res = await axios.post(`${API_URL}/api/profile/upload-image`, formData, {
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
       });
       setProfile({ ...profile, profilePicture: res.data.profilePicture });
@@ -123,7 +124,7 @@ const Profile = () => {
     if (!window.confirm('Are you sure you want to remove your profile picture?')) return;
     try {
       const token = localStorage.getItem('token');
-      await axios.delete('http://localhost:5000/api/profile/remove-image', {
+      await axios.delete(`${API_URL}/api/profile/remove-image`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setProfile({ ...profile, profilePicture: '' });
@@ -148,7 +149,7 @@ const Profile = () => {
 
   const getProfileImageUrl = () => {
     if (profile?.profilePicture) {
-      return `http://localhost:5000/${profile.profilePicture}`;
+      return `${API_URL}/${profile.profilePicture}`;
     }
     return `https://ui-avatars.com/api/?name=${encodeURIComponent(profile?.name || 'User')}&background=3B82F6&color=fff&size=150`;
   };
