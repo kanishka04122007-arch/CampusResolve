@@ -1,0 +1,32 @@
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.stat-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  text-align: center;
+  border-bottom: 4px solid #e2e8f0;
+}
+
+.stat-value {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  color: #64748b;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.stat-total { border-bottom-color: #3b82f6; }
+.stat-pending { border-bottom-color: #f59e0b; }
+.stat-resolved { border-bottom-color: #10b981; }
+.stat-rejected { border-bottom-color: #ef4444; }
