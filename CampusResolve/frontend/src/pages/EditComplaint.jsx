@@ -71,52 +71,52 @@ const EditComplaint = () => {
   };
 
   if (loading) return (
-    <div className="flex items-center justify-center p-24 text-slate-400">
+    <div className="flex items-center justify-center p-16 sm:p-24 text-slate-400">
       <svg className="w-6 h-6 animate-spin mr-2" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
       Loading...
     </div>
   );
 
   if (fetchError) return (
-    <div className="flex flex-col items-center justify-center p-24 text-slate-400">
+    <div className="flex flex-col items-center justify-center p-8 sm:p-24 text-slate-400 text-center">
       <p className="text-4xl mb-3">🚫</p>
-      <p className="font-medium text-red-500 text-center max-w-sm">{fetchError}</p>
-      <button onClick={() => navigate('/complaints/my')} className="mt-4 text-blue-600 hover:underline text-sm">← Back to My Complaints</button>
+      <p className="font-medium text-red-500 max-w-sm text-sm sm:text-base">{fetchError}</p>
+      <button onClick={() => navigate('/complaints/my')} className="mt-4 text-blue-600 hover:underline text-xs sm:text-sm">← Back to My Complaints</button>
     </div>
   );
 
   return (
-    <div>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-slate-800">Edit Complaint</h1>
-        <p className="text-slate-500 mt-1">Update your complaint details below. Only editable while status is <span className="font-semibold text-yellow-600">Submitted</span>.</p>
+    <div className="w-full space-y-6">
+      <div>
+        <h1 className="text-2xl sm:text-3xl font-bold text-slate-800">Edit Complaint</h1>
+        <p className="text-slate-500 mt-1 text-xs sm:text-sm">Update your complaint details below. Only editable while status is <span className="font-semibold text-yellow-600">Submitted</span>.</p>
       </div>
 
-      <div className="max-w-2xl bg-white rounded-2xl shadow-sm border border-slate-100 p-8">
-        {errors.api && <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl text-sm">{errors.api}</div>}
+      <div className="max-w-2xl bg-white rounded-2xl shadow-sm border border-slate-100 p-4 sm:p-6 lg:p-8">
+        {errors.api && <div className="mb-5 sm:mb-6 p-3.5 sm:p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl text-xs sm:text-sm">{errors.api}</div>}
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
           {/* Title */}
           <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-1.5">Complaint Title <span className="text-red-500">*</span></label>
+            <label className="block text-xs sm:text-sm font-semibold text-slate-700 mb-1.5">Complaint Title <span className="text-red-500">*</span></label>
             <input type="text" name="title" value={form.title} onChange={handleChange}
-              className={`w-full px-4 py-3 border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${errors.title ? 'border-red-400 bg-red-50' : 'border-slate-200'}`} />
+              className={`w-full px-3.5 sm:px-4 py-2.5 sm:py-3 border rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${errors.title ? 'border-red-400 bg-red-50' : 'border-slate-200'}`} />
             {errors.title && <p className="mt-1 text-xs text-red-500">{errors.title}</p>}
           </div>
 
           {/* Department & Priority */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-1.5">Complaint Department <span className="text-red-500">*</span></label>
+              <label className="block text-xs sm:text-sm font-semibold text-slate-700 mb-1.5">Complaint Department <span className="text-red-500">*</span></label>
               <select name="complaintDepartment" value={form.complaintDepartment} onChange={handleChange}
-                className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                className="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition bg-white">
                 {DEPARTMENTS.map(d => <option key={d}>{d}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-1.5">Priority <span className="text-red-500">*</span></label>
+              <label className="block text-xs sm:text-sm font-semibold text-slate-700 mb-1.5">Priority <span className="text-red-500">*</span></label>
               <select name="priority" value={form.priority} onChange={handleChange}
-                className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                className="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition bg-white">
                 {PRIORITIES.map(p => <option key={p}>{p}</option>)}
               </select>
             </div>
@@ -124,34 +124,34 @@ const EditComplaint = () => {
 
           {/* Description */}
           <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-1.5">Description <span className="text-red-500">*</span></label>
+            <label className="block text-xs sm:text-sm font-semibold text-slate-700 mb-1.5">Description <span className="text-red-500">*</span></label>
             <textarea name="description" value={form.description} onChange={handleChange} rows={5}
-              className={`w-full px-4 py-3 border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-none ${errors.description ? 'border-red-400 bg-red-50' : 'border-slate-200'}`} />
+              className={`w-full px-3.5 sm:px-4 py-2.5 sm:py-3 border rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-none ${errors.description ? 'border-red-400 bg-red-50' : 'border-slate-200'}`} />
             {errors.description && <p className="mt-1 text-xs text-red-500">{errors.description}</p>}
           </div>
 
           {/* File Upload */}
           <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-1.5">Replace Attachment <span className="text-slate-400 font-normal">(Optional)</span></label>
-            <div className="border-2 border-dashed border-slate-200 rounded-xl p-4 hover:border-blue-400 transition">
+            <label className="block text-xs sm:text-sm font-semibold text-slate-700 mb-1.5">Replace Attachment <span className="text-slate-400 font-normal">(Optional)</span></label>
+            <div className="border-2 border-dashed border-slate-200 rounded-xl p-3 sm:p-4 hover:border-blue-400 transition">
               <input type="file" onChange={(e) => setAttachment(e.target.files[0])} accept="image/*,application/pdf"
-                className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
-              {attachment && <p className="mt-2 text-xs text-slate-500">📎 Selected: {attachment.name}</p>}
+                className="w-full text-xs sm:text-sm text-slate-500 file:mr-3 sm:file:mr-4 file:py-1.5 sm:file:py-2 file:px-3 sm:file:px-4 file:rounded-lg file:border-0 file:text-xs sm:file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+              {attachment && <p className="mt-2 text-xs text-slate-500 truncate">📎 Selected: {attachment.name}</p>}
             </div>
           </div>
 
           {/* Buttons */}
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 pt-2">
             <button type="button" onClick={() => navigate('/complaints/my')}
-              className="flex-1 py-3.5 border border-slate-200 text-slate-600 font-semibold rounded-xl hover:bg-slate-50 transition">
+              className="w-full sm:flex-1 py-2.5 sm:py-3.5 border border-slate-200 text-slate-600 font-semibold rounded-xl hover:bg-slate-50 transition text-xs sm:text-sm">
               Cancel
             </button>
             <button type="submit" disabled={saving}
-              className="flex-1 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-md shadow-blue-200 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+              className="w-full sm:flex-1 py-2.5 sm:py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-md shadow-blue-200 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-xs sm:text-sm">
               {saving
-                ? <><svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg> Saving...</>
+                ? <><svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg> Saving...</>
                 : <>
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                     Save Changes
                   </>
               }

@@ -51,98 +51,101 @@ const StaffComplaints = () => {
   const paginated  = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   return (
-    <div>
-      <div className="mb-6 flex items-center justify-between">
+    <div className="w-full space-y-6">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">My Assigned Complaints</h1>
-          <p className="text-slate-500 mt-1">All complaints assigned to you for resolution.</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-800">My Assigned Complaints</h1>
+          <p className="text-slate-500 mt-1 text-xs sm:text-sm">All complaints assigned to you for resolution.</p>
         </div>
         <Link to="/staff"
-          className="px-4 py-2 border border-slate-200 rounded-xl text-sm text-slate-600 hover:bg-slate-50 transition">
+          className="flex items-center gap-2 px-3.5 sm:px-4 py-2 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-600 hover:bg-slate-50 transition shrink-0">
           ← Dashboard
         </Link>
       </div>
 
       {/* Quick count chips */}
-      <div className="flex gap-3 mb-5 flex-wrap">
+      <div className="flex gap-2 sm:gap-3 flex-wrap">
         {[
           { label: 'Needs Start', count: complaints.filter(c => c.status === 'Assigned').length,    color: 'bg-indigo-50 text-indigo-700 border-indigo-200' },
           { label: 'In Progress', count: complaints.filter(c => c.status === 'In Progress').length,  color: 'bg-orange-50 text-orange-700 border-orange-200' },
           { label: 'Resolved',    count: complaints.filter(c => c.status === 'Resolved').length,    color: 'bg-green-50  text-green-700  border-green-200'  },
         ].map(s => (
-          <span key={s.label} className={`px-3 py-1.5 rounded-lg border text-xs font-semibold ${s.color}`}>
+          <span key={s.label} className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg border text-xs font-semibold ${s.color}`}>
             {s.label}: {s.count}
           </span>
         ))}
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4 mb-5 flex flex-wrap gap-3 items-center">
+      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-3.5 sm:p-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
         <div className="flex-1 min-w-[200px] relative">
           <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           <input type="text" value={search} onChange={e => { setSearch(e.target.value); setPage(1); }}
             placeholder="Search by title or student name..."
-            className="w-full pl-9 pr-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition" />
+            className="w-full pl-9 pr-4 py-2 sm:py-2.5 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition" />
         </div>
-        <select value={filter} onChange={e => { setFilter(e.target.value); setPage(1); }}
-          className="px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition">
-          {STATUS_FILTER.map(s => <option key={s}>{s}</option>)}
-        </select>
-        <button onClick={() => setSortOrder(p => p === 'desc' ? 'asc' : 'desc')}
-          className="flex items-center gap-2 px-4 py-2.5 border border-slate-200 rounded-xl text-sm text-slate-600 hover:bg-slate-50 transition">
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" /></svg>
-          {sortOrder === 'desc' ? 'Newest' : 'Oldest'}
-        </button>
+
+        <div className="flex items-center gap-2 sm:gap-3">
+          <select value={filter} onChange={e => { setFilter(e.target.value); setPage(1); }}
+            className="flex-1 sm:flex-none px-3 sm:px-4 py-2 sm:py-2.5 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition bg-white">
+            {STATUS_FILTER.map(s => <option key={s}>{s}</option>)}
+          </select>
+          <button onClick={() => setSortOrder(p => p === 'desc' ? 'asc' : 'desc')}
+            className="flex items-center justify-center gap-1.5 px-3 sm:px-4 py-2 sm:py-2.5 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-600 hover:bg-slate-50 transition shrink-0">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" /></svg>
+            <span className="hidden min-[400px]:inline">{sortOrder === 'desc' ? 'Newest' : 'Oldest'}</span>
+          </button>
+        </div>
       </div>
 
       {/* Table */}
       <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
         {loading ? (
-          <div className="flex items-center justify-center p-16 text-slate-400">
+          <div className="flex items-center justify-center p-12 sm:p-16 text-slate-400">
             <svg className="w-6 h-6 animate-spin mr-2" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
             Loading complaints...
           </div>
         ) : paginated.length === 0 ? (
-          <div className="text-center p-16 text-slate-400">
+          <div className="text-center p-12 sm:p-16 text-slate-400">
             <p className="text-4xl mb-3">📭</p>
-            <p className="font-medium">No complaints found.</p>
+            <p className="font-medium text-xs sm:text-sm">No complaints found.</p>
           </div>
         ) : (
           <>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead className="bg-slate-50 text-slate-500 uppercase text-xs">
+            <div className="overflow-x-auto w-full">
+              <table className="w-full text-xs sm:text-sm text-left whitespace-nowrap min-w-[620px]">
+                <thead className="bg-slate-50 text-slate-500 uppercase text-[11px] sm:text-xs">
                   <tr>
-                    <th className="px-5 py-3 text-left font-semibold">ID</th>
-                    <th className="px-5 py-3 text-left font-semibold">Title</th>
-                    <th className="px-5 py-3 text-left font-semibold">Student</th>
-                    <th className="px-5 py-3 text-left font-semibold">Priority</th>
-                    <th className="px-5 py-3 text-left font-semibold">Status</th>
-                    <th className="px-5 py-3 text-left font-semibold">Date</th>
-                    <th className="px-5 py-3 text-left font-semibold">Actions</th>
+                    <th className="px-4 sm:px-5 py-3 text-left font-semibold">ID</th>
+                    <th className="px-4 sm:px-5 py-3 text-left font-semibold">Title</th>
+                    <th className="px-4 sm:px-5 py-3 text-left font-semibold">Student</th>
+                    <th className="px-4 sm:px-5 py-3 text-left font-semibold">Priority</th>
+                    <th className="px-4 sm:px-5 py-3 text-left font-semibold">Status</th>
+                    <th className="px-4 sm:px-5 py-3 text-left font-semibold">Date</th>
+                    <th className="px-4 sm:px-5 py-3 text-left font-semibold">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-50">
                   {paginated.map(c => (
                     <tr key={c._id} className="hover:bg-slate-50 transition">
-                      <td className="px-5 py-3.5 font-mono text-xs text-slate-400">#{c._id.slice(-6).toUpperCase()}</td>
-                      <td className="px-5 py-3.5">
-                        <p className="font-medium text-slate-800 max-w-[180px] truncate">{c.title}</p>
-                        <p className="text-xs text-slate-400">{c.complaintDepartment || c.department}</p>
+                      <td className="px-4 sm:px-5 py-3.5 font-mono text-xs text-slate-400">#{c._id.slice(-6).toUpperCase()}</td>
+                      <td className="px-4 sm:px-5 py-3.5">
+                        <p className="font-medium text-slate-800 max-w-[160px] sm:max-w-[180px] truncate">{c.title}</p>
+                        <p className="text-[10px] sm:text-xs text-slate-400">{c.complaintDepartment || c.department}</p>
                       </td>
-                      <td className="px-5 py-3.5 text-slate-500 text-xs">{c.createdBy?.name || 'N/A'}</td>
-                      <td className={`px-5 py-3.5 font-semibold text-xs ${priorityColors[c.priority]}`}>{c.priority}</td>
-                      <td className="px-5 py-3.5">
+                      <td className="px-4 sm:px-5 py-3.5 text-slate-500 text-xs">{c.createdBy?.name || 'N/A'}</td>
+                      <td className={`px-4 sm:px-5 py-3.5 font-semibold text-xs ${priorityColors[c.priority]}`}>{c.priority}</td>
+                      <td className="px-4 sm:px-5 py-3.5">
                         <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${statusColors[c.status] || 'bg-slate-100 text-slate-700'}`}>
                           {c.status}
                         </span>
                       </td>
-                      <td className="px-5 py-3.5 text-slate-400 text-xs">{new Date(c.createdAt).toLocaleDateString()}</td>
-                      <td className="px-5 py-3.5">
+                      <td className="px-4 sm:px-5 py-3.5 text-slate-400 text-xs">{new Date(c.createdAt).toLocaleDateString()}</td>
+                      <td className="px-4 sm:px-5 py-3.5">
                         <Link to={`/staff/complaints/${c._id}`}
-                          className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition ${
+                          className={`px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-lg transition inline-block ${
                             c.status === 'Assigned'    ? 'text-indigo-600 bg-indigo-50 hover:bg-indigo-100' :
                             c.status === 'In Progress' ? 'text-orange-600 bg-orange-50 hover:bg-orange-100' :
                             'text-green-600 bg-green-50 hover:bg-green-100'
@@ -157,19 +160,19 @@ const StaffComplaints = () => {
             </div>
 
             {totalPages > 1 && (
-              <div className="px-5 py-4 border-t border-slate-100 flex items-center justify-between text-sm text-slate-500">
+              <div className="px-4 sm:px-5 py-3.5 sm:py-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-slate-500">
                 <p>Showing {(page-1)*PAGE_SIZE+1}–{Math.min(page*PAGE_SIZE, filtered.length)} of {filtered.length}</p>
-                <div className="flex gap-2">
+                <div className="flex gap-1.5 sm:gap-2">
                   <button onClick={() => setPage(p => Math.max(1, p-1))} disabled={page===1}
-                    className="px-3 py-1.5 border border-slate-200 rounded-lg hover:bg-slate-50 disabled:opacity-40 transition">← Prev</button>
+                    className="px-2.5 sm:px-3 py-1.5 border border-slate-200 rounded-lg hover:bg-slate-50 disabled:opacity-40 transition text-xs sm:text-sm">← Prev</button>
                   {Array.from({ length: totalPages }, (_, i) => (
                     <button key={i+1} onClick={() => setPage(i+1)}
-                      className={`px-3 py-1.5 rounded-lg border transition ${page===i+1 ? 'bg-green-600 text-white border-green-600' : 'border-slate-200 hover:bg-slate-50'}`}>
+                      className={`px-2.5 sm:px-3 py-1.5 rounded-lg border transition text-xs sm:text-sm ${page===i+1 ? 'bg-green-600 text-white border-green-600' : 'border-slate-200 hover:bg-slate-50'}`}>
                       {i+1}
                     </button>
                   ))}
                   <button onClick={() => setPage(p => Math.min(totalPages, p+1))} disabled={page===totalPages}
-                    className="px-3 py-1.5 border border-slate-200 rounded-lg hover:bg-slate-50 disabled:opacity-40 transition">Next →</button>
+                    className="px-2.5 sm:px-3 py-1.5 border border-slate-200 rounded-lg hover:bg-slate-50 disabled:opacity-40 transition text-xs sm:text-sm">Next →</button>
                 </div>
               </div>
             )}

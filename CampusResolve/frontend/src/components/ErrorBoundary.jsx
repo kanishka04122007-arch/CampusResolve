@@ -64,7 +64,7 @@ class ErrorBoundary extends React.Component {
             <p style={{ fontSize: '14px', color: '#64748b', marginBottom: '20px' }}>
               {this.state.error?.message || 'An unexpected error occurred while rendering the page.'}
             </p>
-            <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', justifyContent: 'center' }}>
               <button
                 onClick={() => window.location.reload()}
                 style={{

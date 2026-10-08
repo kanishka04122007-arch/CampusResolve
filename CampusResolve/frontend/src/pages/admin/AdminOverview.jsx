@@ -24,47 +24,51 @@ const AdminOverview = () => {
     }
   };
 
-  if (loading) return <div className="p-8">Loading dashboard overview...</div>;
+  if (loading) return <div className="p-12 text-center text-slate-400 text-xs sm:text-sm">Loading dashboard overview...</div>;
 
   return (
-    <div className="p-6 max-w-7xl mx-auto animate-fade-in">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-800 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-emerald-600">
+    <div className="w-full max-w-7xl mx-auto space-y-6 sm:space-y-8 animate-fade-in">
+      <div>
+        <h1 className="text-2xl sm:text-3xl font-bold text-slate-800 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-emerald-600">
           Admin Dashboard
         </h1>
-        <p className="text-slate-500 mt-1">System Overview & Management</p>
+        <p className="text-slate-500 mt-1 text-xs sm:text-sm">System Overview & Management</p>
       </div>
 
       {stats && (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             <StatCard title="Total Students" value={stats.totalStudents} color="blue" />
             <StatCard title="Total Coordinators" value={stats.totalCoordinators} color="purple" />
             <StatCard title="Total Staff" value={stats.totalStaff} color="green" />
             <StatCard title="Active Users" value={stats.activeUsers} color="emerald" />
           </div>
 
-          <h2 className="text-xl font-bold text-slate-800 mb-4">Complaints Overview</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <StatCard title="Total Complaints" value={stats.totalComplaints} color="slate" />
-            <StatCard title="Pending" value={stats.pendingComplaints} color="yellow" />
-            <StatCard title="In Progress" value={stats.inProgressComplaints} color="orange" />
-            <StatCard title="Resolved / Closed" value={stats.resolvedComplaints + stats.closedComplaints} color="teal" />
+          <div>
+            <h2 className="text-lg sm:text-xl font-bold text-slate-800 mb-3 sm:mb-4">Complaints Overview</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              <StatCard title="Total Complaints" value={stats.totalComplaints} color="slate" />
+              <StatCard title="Pending" value={stats.pendingComplaints} color="yellow" />
+              <StatCard title="In Progress" value={stats.inProgressComplaints} color="orange" />
+              <StatCard title="Resolved / Closed" value={stats.resolvedComplaints + stats.closedComplaints} color="teal" />
+            </div>
           </div>
 
-          <h2 className="text-xl font-bold text-slate-800 mb-4">System Monitoring</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-              <p className="text-sm text-slate-500 font-medium">Today's Complaints</p>
-              <p className="text-3xl font-bold text-slate-800 mt-2">{stats.todaysComplaints}</p>
-            </div>
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-              <p className="text-sm text-slate-500 font-medium">Recently Closed</p>
-              <p className="text-3xl font-bold text-slate-800 mt-2">{stats.recentlyClosed}</p>
-            </div>
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-              <p className="text-sm text-slate-500 font-medium">Total Registered Users</p>
-              <p className="text-3xl font-bold text-slate-800 mt-2">{stats.totalRegisteredUsers}</p>
+          <div>
+            <h2 className="text-lg sm:text-xl font-bold text-slate-800 mb-3 sm:mb-4">System Monitoring</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+              <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-slate-100">
+                <p className="text-xs sm:text-sm text-slate-500 font-medium">Today's Complaints</p>
+                <p className="text-2xl sm:text-3xl font-bold text-slate-800 mt-1 sm:mt-2">{stats.todaysComplaints}</p>
+              </div>
+              <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-slate-100">
+                <p className="text-xs sm:text-sm text-slate-500 font-medium">Recently Closed</p>
+                <p className="text-2xl sm:text-3xl font-bold text-slate-800 mt-1 sm:mt-2">{stats.recentlyClosed}</p>
+              </div>
+              <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-slate-100">
+                <p className="text-xs sm:text-sm text-slate-500 font-medium">Total Registered Users</p>
+                <p className="text-2xl sm:text-3xl font-bold text-slate-800 mt-1 sm:mt-2">{stats.totalRegisteredUsers}</p>
+              </div>
             </div>
           </div>
         </>
@@ -86,13 +90,13 @@ const StatCard = ({ title, value, color }) => {
   };
 
   return (
-    <div className={`p-6 rounded-2xl shadow-sm border flex items-center gap-4 bg-white transition hover:-translate-y-1 hover:shadow-md duration-200`}>
-      <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl font-bold ${colorMap[color]}`}>
+    <div className="p-4 sm:p-6 rounded-2xl shadow-sm border flex items-center gap-3.5 sm:gap-4 bg-white transition hover:-translate-y-1 hover:shadow-md duration-200">
+      <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center text-lg sm:text-xl font-bold shrink-0 ${colorMap[color]}`}>
         {value}
       </div>
-      <div>
-        <p className="text-sm text-slate-500 font-medium">{title}</p>
-        <p className="text-2xl font-bold text-slate-800">{value}</p>
+      <div className="min-w-0">
+        <p className="text-xs sm:text-sm text-slate-500 font-medium truncate">{title}</p>
+        <p className="text-xl sm:text-2xl font-bold text-slate-800">{value}</p>
       </div>
     </div>
   );

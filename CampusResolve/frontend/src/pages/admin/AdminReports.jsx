@@ -49,7 +49,7 @@ const AdminReports = () => {
     }
   };
 
-  if (loading || !reportData) return <div className="p-8">Loading reports & analytics...</div>;
+  if (loading || !reportData) return <div className="p-12 text-center text-slate-400 text-xs sm:text-sm">Loading reports & analytics...</div>;
 
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -100,34 +100,34 @@ const AdminReports = () => {
   };
 
   return (
-    <div className="p-6 max-w-7xl mx-auto animate-fade-in">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-800">Reports & Analytics</h1>
-        <p className="text-slate-500 mt-1">Deep dive into system metrics and resolution rates</p>
+    <div className="w-full max-w-7xl mx-auto space-y-6 sm:space-y-8 animate-fade-in">
+      <div>
+        <h1 className="text-2xl sm:text-3xl font-bold text-slate-800">Reports & Analytics</h1>
+        <p className="text-slate-500 mt-1 text-xs sm:text-sm">Deep dive into system metrics and resolution rates</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
         
         {/* Monthly Trend (Line Chart) */}
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-          <h2 className="text-lg font-bold text-slate-800 mb-6">Monthly Complaint Trend</h2>
-          <div className="h-64">
+        <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-slate-200 min-w-0">
+          <h2 className="text-base sm:text-lg font-bold text-slate-800 mb-4 sm:mb-6">Monthly Complaint Trend</h2>
+          <div className="h-60 sm:h-64 relative min-w-0">
             <Line data={monthlyChartData} options={{ responsive: true, maintainAspectRatio: false }} />
           </div>
         </div>
 
         {/* Priority Distribution (Pie Chart) */}
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-          <h2 className="text-lg font-bold text-slate-800 mb-6">Priority Distribution</h2>
-          <div className="h-64 flex justify-center">
+        <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-slate-200 min-w-0">
+          <h2 className="text-base sm:text-lg font-bold text-slate-800 mb-4 sm:mb-6">Priority Distribution</h2>
+          <div className="h-60 sm:h-64 flex justify-center relative min-w-0">
             <Pie data={priorityChartData} options={{ responsive: true, maintainAspectRatio: false }} />
           </div>
         </div>
 
-        {/* Resolution Rate (Bar/Pie Chart) */}
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 lg:col-span-2">
-          <h2 className="text-lg font-bold text-slate-800 mb-6">Overall Status Distribution</h2>
-          <div className="h-72">
+        {/* Resolution Rate (Bar Chart) */}
+        <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-slate-200 lg:col-span-2 min-w-0">
+          <h2 className="text-base sm:text-lg font-bold text-slate-800 mb-4 sm:mb-6">Overall Status Distribution</h2>
+          <div className="h-64 sm:h-72 relative min-w-0">
             <Bar 
               data={resolutionChartData} 
               options={{ 
